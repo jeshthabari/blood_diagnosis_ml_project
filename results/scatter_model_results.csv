@@ -1,0 +1,6 @@
+model,accuracy,precision,recall,f1,roc_auc,pr_auc,model_file,confusion_matrix
+RandomForest,0.9833333333333333,0.9834710743801653,0.9916666666666667,0.9875518672199171,0.9993055555555556,0.9996558539994564,results\scatter_model_RandomForest.pkl,results\scatter_confmat_RandomForest.png
+AdaBoost,0.9777777777777777,0.9754098360655737,0.9916666666666667,0.9834710743801653,0.998611111111111,0.9993117544439627,results\scatter_model_AdaBoost.pkl,results\scatter_confmat_AdaBoost.png
+ExtraTrees,0.9777777777777777,0.9833333333333333,0.9833333333333333,0.9833333333333333,0.99875,0.9993797544401042,results\scatter_model_ExtraTrees.pkl,results\scatter_confmat_ExtraTrees.png
+LogisticRegression,0.9722222222222222,0.9831932773109243,0.975,0.9790794979079498,0.9922222222222222,0.9961854489014813,results\scatter_model_LogisticRegression.pkl,results\scatter_confmat_LogisticRegression.png
+SVM_RBF,0.9722222222222222,0.9831932773109243,0.975,0.9790794979079498,0.9966666666666666,0.9983517047399074,results\scatter_model_SVM_RBF.pkl,results\scatter_confmat_SVM_RBF.png

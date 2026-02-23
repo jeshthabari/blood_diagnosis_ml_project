@@ -1,0 +1,6 @@
+model,accuracy,precision,recall,f1,roc_auc,pr_auc,model_file,confusion_matrix
+LogisticRegression,1.0,1.0,1.0,1.0,1.0,1.0,results\cbc_model_LogisticRegression.pkl,results\cbc_confmat_LogisticRegression.png
+RandomForest,1.0,1.0,1.0,1.0,1.0,1.0,results\cbc_model_RandomForest.pkl,results\cbc_confmat_RandomForest.png
+SVM_RBF,1.0,1.0,1.0,1.0,1.0,1.0,results\cbc_model_SVM_RBF.pkl,results\cbc_confmat_SVM_RBF.png
+AdaBoost,1.0,1.0,1.0,1.0,1.0,1.0,results\cbc_model_AdaBoost.pkl,results\cbc_confmat_AdaBoost.png
+ExtraTrees,1.0,1.0,1.0,1.0,1.0,1.0,results\cbc_model_ExtraTrees.pkl,results\cbc_confmat_ExtraTrees.png
