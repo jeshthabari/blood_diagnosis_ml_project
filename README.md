@@ -164,6 +164,6 @@ blood_diagnosis_ml_project/
 ## Author
 
 Jeshtha Bari
-Divyesh Sahay  
+,Divyesh Sahay  
 BE Data Science  
 Machine Learning Project
