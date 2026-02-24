@@ -98,27 +98,6 @@ The models were evaluated using:
 
 ---
 
-## Project Structure
-
-blood_diagnosis_ml_project/
-│
-├── data/
-│   ├── cbc_augmented_with_ids.csv
-│   ├── hplc_augmented_with_ids.csv
-│   └── scatter_augmented_with_ids.csv
-│
-├── notebooks/
-│   └── model_training.ipynb
-│
-├── src/
-│   ├── preprocessing.py
-│   ├── training.py
-│   └── evaluation.py
-│
-└── README.md
-
----
-
 ## Technologies Used
 
 - Python
@@ -149,21 +128,7 @@ blood_diagnosis_ml_project/
 
    jupyter notebook
 
----
 
-## Future Improvements
-
-- Implementation of Deep Learning models
-- Model deployment using Flask or Django
-- Integration with hospital database systems
-- Real-time prediction interface
-- Explainable AI integration
-
----
-
-## Author
-
-Jeshtha Bari
-,Divyesh Sahay  
+Jeshtha Bari, Divyesh Sahay  
 BE Data Science  
 Machine Learning Project
