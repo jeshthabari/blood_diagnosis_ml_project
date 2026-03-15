@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Divyesh Sahay | Portfolio</title>
+<style>
+  :root {
+    --bg: #0a0c10;
+    --border: #1e2330;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --card: #13161e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.15;
+  }
+  .orb-1 { width: 500px; height: 500px; background: var(--accent2); top: -150px; right: -100px; }
+  .orb-2 { width: 400px; height: 400px; background: var(--accent); bottom: 100px; left: -150px; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 60px;
+    background: rgba(10,12,16,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: monospace; font-size: 14px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    font-family: monospace; font-size: 12px; color: var(--muted);
+    text-decoration: none; letter-spacing: 1px; text-transform: uppercase;
+    transition: color 0.2s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1px; background: var(--accent); transform: scaleX(0); transition: transform 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .wrapper { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 0 40px; }
+
+  #hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; position: relative; }
+
+  .hero-tag {
+    display: inline-block; font-family: monospace; font-size: 11px; color: var(--accent);
+    background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2);
+    padding: 5px 14px; border-radius: 100px; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 28px; animation: fadeUp 0.6s ease both;
+  }
+
+  h1.hero-name {
+    font-size: clamp(48px, 8vw, 80px); font-weight: 800; line-height: 1.05;
+    letter-spacing: -2px; animation: fadeUp 0.6s 0.1s ease both; margin-bottom: 16px;
+  }
+  h1.hero-name span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-family: monospace; font-size: 14px; color: var(--muted);
+    margin-bottom: 40px; animation: fadeUp 0.6s 0.2s ease both; min-height: 22px;
+  }
+
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px;
+    border-radius: 8px; font-family: monospace; font-size: 13px;
+    text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--accent); color: var(--bg); font-weight: 700; }
+  .btn-primary:hover { background: #33ecff; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,229,255,0.25); }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .scroll-indicator {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: fadeUp 0.6s 0.8s ease both;
+  }
+  .scroll-text { font-family: monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollPulse 2s ease infinite; }
+
+  section { padding: 100px 0; }
+  .section-label { font-family: monospace; font-size: 11px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
+  .section-title { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -1px; margin-bottom: 48px; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .about-text { font-size: 16px; line-height: 1.8; color: #94a3b8; }
+  .about-text strong { color: var(--text); }
+
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; transition: border-color 0.2s, transform 0.2s;
+  }
+  .stat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .stat-num { font-size: 36px; font-weight: 800; color: var(--accent); font-family: monospace; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 13px; color: var(--muted); font-family: monospace; }
+
+  .skills-container { display: flex; flex-direction: column; gap: 16px; }
+  .skill-row { display: flex; align-items: center; gap: 16px; opacity: 0; transform: translateX(-20px); transition: opacity 0.5s, transform 0.5s; }
+  .skill-row.visible { opacity: 1; transform: translateX(0); }
+  .skill-name { font-family: monospace; font-size: 13px; color: var(--text); width: 160px; flex-shrink: 0; }
+  .skill-bar { flex: 1; height: 6px; background: var(--border); border-radius: 100px; overflow: hidden; }
+  .skill-fill { height: 100%; border-radius: 100px; width: 0; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+  .skill-fill.cyan  { background: linear-gradient(90deg, var(--accent2), var(--accent)); }
+  .skill-fill.green { background: linear-gradient(90deg, var(--accent), var(--accent3)); }
+  .skill-fill.purple{ background: linear-gradient(90deg, var(--accent2), #a78bfa); }
+  .skill-pct { font-family: monospace; font-size: 12px; color: var(--muted); width: 36px; text-align: right; }
+
+  .projects-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+
+  .project-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px;
+    display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.5s, transform 0.5s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .project-card.visible { opacity: 1; transform: translateY(0); }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,229,255,0.08); }
+  .project-card.wip { border-color: rgba(124,58,237,0.3); background: linear-gradient(135deg, #13161e, #16101e); }
+  .project-card.wip:hover { border-color: rgba(124,58,237,0.7); box-shadow: 0 16px 48px rgba(124,58,237,0.1); transform: translateY(-4px); }
+
+  .project-meta { display: flex; flex-direction: column; gap: 10px; }
+  .tag-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+  .project-tag {
+    display: inline-flex; align-items: center; gap: 6px; font-family: monospace; font-size: 10px;
+    color: var(--accent3); background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
+    padding: 3px 10px; border-radius: 100px; letter-spacing: 1px; text-transform: uppercase; width: fit-content;
+  }
+  .project-tag.purple { color: #a78bfa; background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.25); }
+
+  .wip-badge {
+    display: inline-flex; align-items: center; gap: 6px; font-family: monospace; font-size: 10px;
+    color: #f59e0b; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25);
+    padding: 3px 10px; border-radius: 100px; letter-spacing: 1px; text-transform: uppercase; width: fit-content;
+  }
+  .wip-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; display: inline-block; animation: blink 1.2s ease infinite; }
+
+  .project-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+  .project-desc { font-size: 14px; color: #64748b; line-height: 1.7; max-width: 600px; }
+  .project-stack { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .stack-pill { font-family: monospace; font-size: 11px; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 3px 10px; border-radius: 6px; }
+
+  .btn-github {
+    display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 10px;
+    font-family: monospace; font-size: 12px; color: var(--text); background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border); text-decoration: none; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+  }
+  .btn-github:hover { background: rgba(0,229,255,0.08); border-color: var(--accent); color: var(--accent); transform: scale(1.04); }
+
+  .btn-locked {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 12px 22px; border-radius: 10px; font-family: monospace; font-size: 12px;
+    color: #475569; background: rgba(255,255,255,0.02); border: 1px dashed #2d3748;
+    white-space: nowrap; flex-shrink: 0; cursor: default;
+  }
+  .btn-locked .lock-row { display: flex; align-items: center; gap: 8px; }
+  .btn-locked .coming { font-size: 10px; color: #f59e0b; letter-spacing: 1px; }
+
+  .contact-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 56px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .contact-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .contact-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
+  .contact-subtitle { color: var(--muted); font-size: 15px; margin-bottom: 40px; font-family: monospace; }
+  .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 0; text-align: center; font-family: monospace; font-size: 12px; color: var(--muted); }
+
+  .cursor { display: inline-block; width: 2px; height: 14px; background: var(--accent); margin-left: 2px; vertical-align: middle; animation: blink 1s step-end infinite; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  @keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  @media (max-width: 700px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .wrapper { padding: 0 24px; }
+    .about-grid, .project-card { grid-template-columns: 1fr; }
+    .contact-card { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav>
+  <div class="nav-logo">DS://portfolio</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="wrapper">
+    <div>
+      <div class="hero-tag">👋 Available for opportunities</div>
+      <h1 class="hero-name">Divyesh<br/><span>Sahay</span></h1>
+      <p class="hero-subtitle" id="typewriter"><span class="cursor"></span></p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          View Projects
+        </a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrapper">
+    <div class="section-label">// 01 — about</div>
+    <h2 class="section-title">Who I Am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>Data Science student</strong> with a deep passion for machine learning and artificial intelligence. I love turning raw data into meaningful insights and building intelligent systems that solve real-world problems.</p>
+        <br/>
+        <p>My work spans the full stack — from <strong>model development & research</strong> to building <strong>production-ready backends</strong> with Django REST and interactive frontends with React.</p>
+        <br/>
+        <p>When I'm not training models, I'm exploring new algorithms, contributing to open-source, and turning coffee into code.</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Projects Shipped</div></div>
+        <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Technologies</div></div>
+        <div class="stat-card"><div class="stat-num">ML</div><div class="stat-label">Core Focus</div></div>
+        <div class="stat-card"><div class="stat-num">∞</div><div class="stat-label">Curiosity</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrapper">
+    <div class="section-label">// 02 — skills</div>
+    <h2 class="section-title">Tech Stack</h2>
+    <div class="skills-container">
+      <div class="skill-row" data-pct="92"><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-fill cyan"></div></div><span class="skill-pct">92%</span></div>
+      <div class="skill-row" data-pct="85"><span class="skill-name">Machine Learning</span><div class="skill-bar"><div class="skill-fill purple"></div></div><span class="skill-pct">85%</span></div>
+      <div class="skill-row" data-pct="78"><span class="skill-name">SQL</span><div class="skill-bar"><div class="skill-fill green"></div></div><span class="skill-pct">78%</span></div>
+      <div class="skill-row" data-pct="80"><span class="skill-name">Django</span><div class="skill-bar"><div class="skill-fill cyan"></div></div><span class="skill-pct">80%</span></div>
+      <div class="skill-row" data-pct="72"><span class="skill-name">React</span><div class="skill-bar"><div class="skill-fill purple"></div></div><span class="skill-pct">72%</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrapper">
+    <div class="section-label">// 03 — projects</div>
+    <h2 class="section-title">What I've Built</h2>
+    <div class="projects-grid">
+
+      
+      <div class="project-card wip">
+        <div class="project-meta">
+          <div class="tag-row">
+            <span class="project-tag purple">👁️ Computer Vision / AI Wearable</span>
+            <span class="wip-badge"><span class="wip-dot"></span>Almost Done</span>
+          </div>
+          <h3 class="project-title">See For You</h3>
+          <p class="project-desc">An AI-powered wearable assistive system in the form of smart glasses for visually impaired individuals. Built on a Raspberry Pi Zero 2 W with a stereo camera module, it applies real-time object detection (YOLOv8-tiny) and depth estimation to identify obstacles like pedestrians, vehicles, and stairs — all processed on-device via edge inference. Environmental information is communicated through directional haptic feedback (vibration motors) and audio alerts via Bluetooth smart glasses, without blocking ambient sounds. A motion-triggered OCR mode recognizes short text such as medicine labels, currency notes, and signage, converting it to speech. A low-cost, infrastructure-free wearable that combines object detection, stereo depth perception, OCR, and intelligent feedback to enhance mobility and independence.</p>
+          <div class="project-stack">
+            <span class="stack-pill">Raspberry Pi</span><span class="stack-pill">YOLOv8-tiny</span><span class="stack-pill">OpenCV</span><span class="stack-pill">OCR</span><span class="stack-pill">Stereo Vision</span><span class="stack-pill">Edge AI</span>
+          </div>
+        </div>
+        <div class="btn-locked">
+          <div class="lock-row">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Private Repo
+          </div>
+          <span class="coming">Coming Soon</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-meta">
+          <span class="project-tag">🔍 Machine Learning</span>
+          <h3 class="project-title">Fraud Detection in Real Time</h3>
+          <p class="project-desc">Detects fraudulent financial transactions using supervised ML models. Features real-time prediction pipelines, feature engineering on transaction data, and model explainability using SHAP values.</p>
+          <div class="project-stack">
+            <span class="stack-pill">Python</span><span class="stack-pill">Scikit-learn</span><span class="stack-pill">Pandas</span><span class="stack-pill">SHAP</span>
+          </div>
+        </div>
+        <a href="https://github.com/Div-doin/Fraud-detection-in-real-time" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-meta">
+          <span class="project-tag">🩸 Healthcare AI</span>
+          <h3 class="project-title">Blood Diagnosis ML Project</h3>
+          <p class="project-desc">A classification model for detecting haematological disorders from blood test parameters. Utilises ensemble methods and deep learning to achieve high diagnostic accuracy across multiple disorder categories.</p>
+          <div class="project-stack">
+            <span class="stack-pill">Python</span><span class="stack-pill">TensorFlow</span><span class="stack-pill">NumPy</span><span class="stack-pill">Matplotlib</span>
+          </div>
+        </div>
+        <a href="https://github.com/Div-doin/blood_diagnosis_project" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-meta">
+          <span class="project-tag">⚙️ Backend / API</span>
+          <h3 class="project-title">Payroll Management System</h3>
+          <p class="project-desc">A fully-featured Django REST API backend for payroll management. Includes employee records, salary computation, tax deductions, attendance tracking, and role-based access control for HR operations.</p>
+          <div class="project-stack">
+            <span class="stack-pill">Django</span><span class="stack-pill">Django REST</span><span class="stack-pill">PostgreSQL</span><span class="stack-pill">JWT Auth</span>
+          </div>
+        </div>
+        <a href="https://github.com/Div-doin" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-meta">
+          <span class="project-tag">🛡️ AI / Government Tech</span>
+          <h3 class="project-title">Aadhaar Fraud Intelligence System</h3>
+          <p class="project-desc">An AI-driven audit planning system built for UIDAI. Detects regional identity fraud patterns across India by fusing enrolment spikes, demographic instability, and biometric anomalies into a Unified Aadhaar Stability Score. Uses Isolation Forest for anomaly detection and Reinforcement Learning to recommend optimal audit deployment across high-risk pincodes.</p>
+          <div class="project-stack">
+            <span class="stack-pill">Python</span><span class="stack-pill">Isolation Forest</span><span class="stack-pill">Reinforcement Learning</span><span class="stack-pill">Pandas</span><span class="stack-pill">Jupyter</span>
+          </div>
+        </div>
+        <a href="https://github.com/Div-doin/UIDAI" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrapper">
+    <div class="section-label">// 04 — contact</div>
+    <div class="contact-card">
+      <h2 class="contact-title">Let's Build Something</h2>
+      <p class="contact-subtitle">Open to internships, collaborations & interesting problems.</p>
+      <div class="contact-links">
+        <a href="mailto:divyeshsahay048@gmail.com" class="btn btn-primary">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Send Email
+        </a>
+        <a href="https://github.com/Div-doin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub Profile
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrapper">
+    <p>Designed & built by <strong style="color:var(--accent)">Divyesh Sahay</strong> · divyeshsahay048@gmail.com</p>
+  </div>
+</footer>
+
+<script>
+  const phrases = ["Data Science Student","Machine Learning Engineer","Python Developer","AI Enthusiast","Backend Developer"];
+  let phraseIdx = 0, charIdx = 0, deleting = false;
+  const el = document.getElementById('typewriter');
+  function type() {
+    const phrase = phrases[phraseIdx];
+    if (!deleting) {
+      el.innerHTML = phrase.slice(0, ++charIdx) + '<span class="cursor"></span>';
+      if (charIdx === phrase.length) { deleting = true; setTimeout(type, 1800); return; }
+    } else {
+      el.innerHTML = phrase.slice(0, --charIdx) + '<span class="cursor"></span>';
+      if (charIdx === 0) { deleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; }
+    }
+    setTimeout(type, deleting ? 50 : 80);
+  }
+  type();
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      if (entry.target.classList.contains('project-card')) {
+        document.querySelectorAll('.project-card').forEach((c, i) => setTimeout(() => c.classList.add('visible'), i * 100));
+      }
+      if (entry.target.classList.contains('skill-row')) {
+        document.querySelectorAll('.skill-row').forEach((row, i) => {
+          setTimeout(() => {
+            row.classList.add('visible');
+            row.querySelector('.skill-fill').style.width = row.dataset.pct + '%';
+          }, i * 120);
+        });
+      }
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.project-card, .skill-row').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
